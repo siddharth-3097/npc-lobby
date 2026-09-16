@@ -49,6 +49,23 @@ if VERCEL_URL:
     ALLOWED_HOSTS.append(VERCEL_URL)
     CSRF_TRUSTED_ORIGINS.append(f'https://{VERCEL_URL}')
 
+# Vercel (and most reverse proxies) terminate TLS at the edge and forward
+# requests internally as plain HTTP, tagging the original scheme in this
+# header. Without telling Django about it, request.is_secure() is always
+# False behind the proxy, and SECURE_SSL_REDIRECT below would redirect loop.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+# We send all app email through Resend's API directly (see recs/emails.py),
+# not Django's send_mail/MAILERS — the console backend below is only a local
+# dev fallback and is never reached once RESEND_API_KEY is set, so the
+# generic "don't use a dev email backend" check doesn't apply here.
+SILENCED_SYSTEM_CHECKS = ['mail.E001']
+
 
 # Application definition
 
