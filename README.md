@@ -73,3 +73,58 @@ python manage.py createsuperuser
 ```
 
 Then visit `/admin/`.
+
+## Database
+
+Uses Postgres (tested against [Neon](https://neon.tech)) when `DATABASE_URL`
+is set, falling back to a local sqlite file otherwise. Point `DATABASE_URL`
+at your database in `.env`, then:
+
+```bash
+python manage.py migrate
+```
+
+There's no automated release step that runs migrations on deploy — after
+changing models, run `migrate` locally against the production
+`DATABASE_URL` before or right after pushing.
+
+## Deploying on Vercel
+
+The app is set up to run on Vercel as a Python WSGI serverless function:
+
+- `api/index.py` — the entrypoint Vercel's Python runtime calls.
+- `vercel.json` — routes every request to that entrypoint.
+- Static files are served by [WhiteNoise](http://whitenoise.evans.io/)
+  from the committed `staticfiles/` directory, since Vercel's filesystem
+  is read-only at request time (no `collectstatic` step runs on deploy).
+
+**One-time setup:**
+
+1. In the Vercel dashboard, "Add New Project" → import this GitHub repo.
+   Vercel will detect `vercel.json` automatically.
+2. Add these environment variables in Project Settings → Environment
+   Variables (same names as `.env.example`):
+   - `SECRET_KEY` — generate with
+     `python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`
+   - `DEBUG=False`
+   - `DATABASE_URL` — your Postgres connection string
+   - `RESEND_API_KEY`, `DEFAULT_FROM_EMAIL`, `SITE_URL`
+   - `ALLOWED_HOSTS` — comma-separated, include your custom domain if any
+     (Vercel's own `*.vercel.app` preview/prod URL is allowed automatically)
+   - `CSRF_TRUSTED_ORIGINS` — comma-separated, full origins with scheme,
+     e.g. `https://npclobby.in` (again, the `*.vercel.app` URL is handled
+     automatically)
+3. Deploy.
+
+**Whenever templates, CSS, JS, or images change**, re-run before pushing so
+the deployed static files stay in sync (they're committed, not built on
+Vercel):
+
+```bash
+python manage.py collectstatic --noinput
+git add staticfiles
+```
+
+**Whenever models change**, run `python manage.py migrate` locally against
+the production `DATABASE_URL` (there's no release-phase hook on Vercel to
+do this automatically).
