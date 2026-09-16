@@ -102,6 +102,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'recs.context_processors.posthog',
             ],
         },
     },
@@ -211,3 +212,10 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'NPC Lobby <noreply@la
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
 
 SITE_URL = os.environ.get('SITE_URL', 'https://www.npclobby.in')
+
+# PostHog (https://posthog.com) product analytics. The project key is a
+# public, client-side identifier (not a secret) — PostHog's own install
+# snippet expects it embedded in page source. Still kept configurable via
+# env so it's easy to swap projects or unset it to disable tracking.
+POSTHOG_KEY = os.environ.get('POSTHOG_KEY', 'phc_mVa8TEYqrUnGDgEdPfZujpGSRqCnLcSE6vW8rdWNCXqk')
+POSTHOG_HOST = os.environ.get('POSTHOG_HOST', 'https://us.i.posthog.com')
