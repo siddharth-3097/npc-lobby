@@ -3,16 +3,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   particlesJS("particles-js", {
     particles: {
-      number: { value: 45, density: { enable: true, value_area: 900 } },
+      number: { value: 90, density: { enable: true, value_area: 900 } },
       color: { value: ["#7c3aed", "#22d3ee", "#4ade80", "#facc15", "#ff2ec4"] },
       shape: { type: "edge" },
-      opacity: { value: 0.35, random: true, anim: { enable: false } },
-      size: { value: 3, random: true },
+      opacity: { value: 0.65, random: true, anim: { enable: false } },
+      size: { value: 4, random: true },
       line_linked: {
         enable: true,
-        distance: 130,
-        color: "#b8b6ae",
-        opacity: 0.25,
+        distance: 140,
+        color: "#9a9890",
+        opacity: 0.4,
         width: 1,
       },
       move: {
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         resize: true,
       },
       modes: {
-        grab: { distance: 140, line_linked: { opacity: 0.45 } },
+        grab: { distance: 150, line_linked: { opacity: 0.65 } },
       },
     },
     retina_detect: true,
