@@ -58,7 +58,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initHomePage();
   initKarmaCheck();
+  initFeltNote();
 });
+
+function initFeltNote() {
+  const feltNoteBtn = document.getElementById("felt-note-btn");
+  if (!feltNoteBtn) return;
+
+  feltNoteBtn.addEventListener("click", () => {
+    openModal("felt-note-overlay");
+  });
+}
 
 function initKarmaCheck() {
   const karmaCheckBtn = document.getElementById("karma-check-btn");

@@ -357,6 +357,31 @@ main {
   margin-top: 8px;
 }
 
+.karma-explainer {
+  width: 100%;
+  max-width: 420px;
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+.karma-explainer-heading {
+  margin: 0 0 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.karma-explainer p {
+  margin: 0 0 10px;
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.karma-explainer p:last-child {
+  margin-bottom: 0;
+}
+
 /* ---------- Modals ---------- */
 
 .modal-overlay {
@@ -439,6 +464,17 @@ main {
 }
 
 .modal textarea { resize: vertical; }
+
+.felt-note p {
+  margin: 0 0 16px;
+  line-height: 1.65;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.felt-note p:last-child {
+  margin-bottom: 0;
+}
 
 .karma-result {
   text-align: center;
