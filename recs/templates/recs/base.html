@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="{% static 'recs/css/style.css' %}?v={% now 'U' %}">
 </head>
 <body>
+<div id="particles-js"></div>
 <div id="toast" class="toast"></div>
 <main>
 {% block content %}{% endblock %}
@@ -48,6 +49,8 @@
   </div>
 </div>
 <script>window.CSRF_TOKEN = "{{ csrf_token }}";</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+<script src="{% static 'recs/js/particles-init.js' %}?v={% now 'U' %}"></script>
 <script src="{% static 'recs/js/main.js' %}?v={% now 'U' %}"></script>
 {% block extra_js %}{% endblock %}
 </body>
