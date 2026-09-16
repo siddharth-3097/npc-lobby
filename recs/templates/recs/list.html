@@ -1,0 +1,115 @@
+{% extends "recs/base.html" %}
+{% load static %}
+{% block title %}The List — NPC Lobby{% endblock %}
+
+{% block content %}
+<nav class="topnav">
+  <a href="{% url 'recs:index' %}" class="brand pixel">NPC Lobby</a>
+  <a href="{% url 'recs:index' %}" class="btn-pill">&larr; Home</a>
+</nav>
+
+<div class="list-page">
+  <div class="list-header">
+    <h1 class="pixel">THE LIST</h1>
+    <p class="tagline">everything the NPCs have put you onto</p>
+  </div>
+
+  <div id="send-list-bar" class="send-list-bar hidden">
+    <span id="selected-count">0 selected</span>
+    <button id="send-list-btn" class="btn-primary" type="button">Send me my list</button>
+  </div>
+
+  <div class="filters">
+    <button class="filter-chip active" data-filter="all" type="button">All</button>
+    {% for value, label in type_choices %}
+    <button class="filter-chip" data-filter="{{ value }}" type="button">{{ label }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="table-wrap">
+    <table class="rec-table">
+      <thead>
+        <tr>
+          <th class="col-select"></th>
+          <th>Recommendation</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th class="col-love"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for rec in recommendations %}
+        <tr class="rec-row" data-type="{{ rec.rec_type }}">
+          <td class="col-select">
+            <input type="checkbox" class="rec-select" data-id="{{ rec.id }}" data-title="{{ rec.title }}" data-type-label="{{ rec.get_type_label }}" data-description="{{ rec.description }}">
+          </td>
+          <td class="rec-title-cell">{{ rec.title }}</td>
+          <td><span class="rec-type-badge">{{ rec.get_type_label }}</span></td>
+          <td class="rec-description-cell">{{ rec.description }}</td>
+          <td class="col-love">
+            <button class="btn-love" type="button" data-rec-id="{{ rec.id }}" data-rec-title="{{ rec.title }}" aria-label="Send love to {{ rec.name }}">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" class="empty-state">No recommendations yet. Be the first NPC to speak up!</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal-overlay" id="send-list-overlay">
+  <div class="modal">
+    <button class="modal-close" type="button" data-close-modal>&times;</button>
+    <h2>Send me my list</h2>
+    <form id="send-list-form">
+      <label>
+        Your email
+        <input type="email" id="send-list-email" required maxlength="254">
+      </label>
+      <button type="submit" class="btn-primary">Send it over</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="thankyou-overlay">
+  <div class="modal">
+    <button class="modal-close" type="button" data-close-modal>&times;</button>
+    <h2>Say thanks</h2>
+    <p class="modal-subtitle">for: <strong id="thankyou-title-echo"></strong></p>
+    <form id="thankyou-form">
+      <label>
+        Your name
+        <input type="text" id="thankyou-name" required maxlength="120">
+      </label>
+      <label>
+        Your email
+        <input type="email" id="thankyou-email" required maxlength="254">
+      </label>
+      <label>
+        A message (optional)
+        <textarea id="thankyou-message" maxlength="400" rows="3" placeholder="Loved this! Thanks for sharing."></textarea>
+      </label>
+      <button type="submit" class="btn-primary">Send thank you</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="duplicate-overlay">
+  <div class="modal">
+    <button class="modal-close" type="button" data-close-modal>&times;</button>
+    <h2>Slow down a little</h2>
+    <p id="duplicate-message"></p>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'recs/js/list.js' %}?v={% now 'U' %}"></script>
+{% endblock %}

@@ -1,0 +1,251 @@
+{% extends "recs/base.html" %}
+{% load static %}
+{% block title %}NPC Lobby{% endblock %}
+
+{% block content %}
+<nav class="topnav">
+  <span class="brand pixel">NPC Lobby</span>
+</nav>
+
+<div class="home">
+  <div class="lobby-stage">
+    <img src="{% static 'recs/img/npc-frog.gif' %}" alt="Pixel-art animated frog" class="npc-sprite">
+  </div>
+
+  <h1 class="wordmark pixel">NPC LOBBY</h1>
+  <p class="tagline">where the NPCs put you onto the good stuff</p>
+
+  <form id="kickoff-form" class="kickoff-form" autocomplete="off">
+    <div class="kickoff-input-wrap">
+      <input
+        type="text"
+        id="kickoff-input"
+        placeholder="recommend something today that you found cool"
+        required
+        maxlength="200"
+      >
+      <button type="submit" class="kickoff-submit" aria-label="Submit recommendation">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </form>
+
+  <a href="{% url 'recs:list' %}" class="btn-view-list pixel">View the List</a>
+
+  <div class="how-it-works">
+    <div class="how-card">
+      <div class="how-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 10.5v3a1 1 0 0 0 1 1h2.2l7.8 4V5.5l-7.8 4H4a1 1 0 0 0-1 1z" fill="currentColor"/>
+          <path d="M17.5 9a5 5 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M9 18.5 9.7 21a1.5 1.5 0 0 0 2.9-.4v-2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>Recommend what you love</h3>
+      <p>Drop a movie, show, book, or anything else worth talking about.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="5" width="3" height="3" fill="currentColor"/>
+          <rect x="9" y="4.7" width="12" height="2.6" fill="currentColor"/>
+          <rect x="3" y="11" width="3" height="3" fill="currentColor"/>
+          <rect x="9" y="10.7" width="12" height="2.6" fill="currentColor"/>
+          <rect x="3" y="17" width="3" height="3" fill="currentColor"/>
+          <rect x="9" y="16.7" width="12" height="2.6" fill="currentColor"/>
+        </svg>
+      </div>
+      <h3>Check what the NPCs recommend</h3>
+      <p>Browse everything the lobby has been vouching for lately.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <polygon points="12,2.5 14.8,9 21.5,9.6 16.4,14 18,20.5 12,17 6,20.5 7.6,14 2.5,9.6 9.2,9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>Get Good Karma</h3>
+      <p>Get thanked with love when someone acts on your pick.</p>
+    </div>
+  </div>
+
+  <div class="checkpoints-section">
+    <h2 class="pixel section-heading">KARMA CHECKPOINTS</h2>
+    <p class="tagline">climb the ranks by putting people onto good stuff</p>
+
+    <div class="checkpoint-track">
+      <div class="checkpoint">
+        <div class="checkpoint-connector">
+          <span class="checkpoint-line before"></span>
+          <span class="checkpoint-dot"></span>
+          <span class="checkpoint-line after"></span>
+        </div>
+        <div class="checkpoint-body">
+          <div class="checkpoint-karma">100</div>
+          <div class="checkpoint-tier">Lurker</div>
+          <div class="checkpoint-unlock">&#128274; access to our private Discord</div>
+        </div>
+      </div>
+      <div class="checkpoint">
+        <div class="checkpoint-connector">
+          <span class="checkpoint-line before"></span>
+          <span class="checkpoint-dot"></span>
+          <span class="checkpoint-line after"></span>
+        </div>
+        <div class="checkpoint-body">
+          <div class="checkpoint-karma">200</div>
+          <div class="checkpoint-tier">Plug</div>
+          <div class="checkpoint-unlock">&#9749; your next coffee is our treat</div>
+        </div>
+      </div>
+      <div class="checkpoint">
+        <div class="checkpoint-connector">
+          <span class="checkpoint-line before"></span>
+          <span class="checkpoint-dot"></span>
+          <span class="checkpoint-line after"></span>
+        </div>
+        <div class="checkpoint-body">
+          <div class="checkpoint-karma">500</div>
+          <div class="checkpoint-tier">Scout</div>
+          <div class="checkpoint-unlock">&#127871; your next movie ticket is covered</div>
+        </div>
+      </div>
+      <div class="checkpoint">
+        <div class="checkpoint-connector">
+          <span class="checkpoint-line before"></span>
+          <span class="checkpoint-dot"></span>
+          <span class="checkpoint-line after"></span>
+        </div>
+        <div class="checkpoint-body">
+          <div class="checkpoint-karma">750</div>
+          <div class="checkpoint-tier">Curator</div>
+          <div class="checkpoint-unlock">&#127916; join the team for movie night</div>
+        </div>
+      </div>
+      <div class="checkpoint">
+        <div class="checkpoint-connector">
+          <span class="checkpoint-line before"></span>
+          <span class="checkpoint-dot"></span>
+          <span class="checkpoint-line after"></span>
+        </div>
+        <div class="checkpoint-body">
+          <div class="checkpoint-karma">1,000</div>
+          <div class="checkpoint-tier">Tastemaker</div>
+          <div class="checkpoint-unlock">&#128218; your next book is on us</div>
+        </div>
+      </div>
+      <div class="checkpoint">
+        <div class="checkpoint-connector">
+          <span class="checkpoint-line before"></span>
+          <span class="checkpoint-dot"></span>
+          <span class="checkpoint-line after"></span>
+        </div>
+        <div class="checkpoint-body">
+          <div class="checkpoint-karma">2,000</div>
+          <div class="checkpoint-tier">Connoisseur</div>
+          <div class="checkpoint-unlock">&#128085; exclusive member merch</div>
+        </div>
+      </div>
+      <div class="checkpoint">
+        <div class="checkpoint-connector">
+          <span class="checkpoint-line before"></span>
+          <span class="checkpoint-dot"></span>
+          <span class="checkpoint-line after"></span>
+        </div>
+        <div class="checkpoint-body">
+          <div class="checkpoint-karma">5,000</div>
+          <div class="checkpoint-tier">Cult Figure</div>
+          <div class="checkpoint-unlock">&#128191; our vinyl pick of the month, delivered to you</div>
+        </div>
+      </div>
+      <div class="checkpoint">
+        <div class="checkpoint-connector">
+          <span class="checkpoint-line before"></span>
+          <span class="checkpoint-dot"></span>
+          <span class="checkpoint-line after"></span>
+        </div>
+        <div class="checkpoint-body">
+          <div class="checkpoint-karma">10,000</div>
+          <div class="checkpoint-tier">God Tier</div>
+          <div class="checkpoint-unlock">&#9889; the ultimate recommendation hamper</div>
+        </div>
+      </div>
+    </div>
+
+    <button id="invite-friend-btn" type="button" class="btn-view-list pixel">Invite a Friend</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="rec-modal">
+    <button class="modal-close" type="button" data-close-modal>&times;</button>
+    <h2>Tell us more</h2>
+    <p class="modal-subtitle">You're recommending: <strong id="modal-title-echo"></strong></p>
+    <form id="rec-form">
+      <label>
+        Your name
+        <input type="text" id="rec-name" required maxlength="120">
+      </label>
+      <label>
+        Your email
+        <input type="email" id="rec-email" required maxlength="254">
+      </label>
+      <label>
+        What kind of recommendation is this?
+        <select id="rec-type" required>
+          <option value="" disabled selected>Choose one...</option>
+          {% for value, label in type_choices %}
+          <option value="{{ value }}">{{ label }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label id="other-type-wrap" class="hidden">
+        What kind, exactly?
+        <input type="text" id="rec-other-type" maxlength="60">
+      </label>
+      <label>
+        Who will love it, and why?
+        <textarea id="rec-description" required maxlength="600" rows="4" placeholder="e.g. Anyone who liked Severance — it's a slow-burn mystery with the same paranoid office energy."></textarea>
+      </label>
+      <button type="submit" class="btn-primary">Submit recommendation</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="invite-overlay">
+  <div class="modal">
+    <button class="modal-close" type="button" data-close-modal>&times;</button>
+    <h2>Invite a friend</h2>
+    <p class="modal-subtitle">Bring another NPC into the lobby.</p>
+    <form id="invite-form">
+      <label>
+        Your name
+        <input type="text" id="invite-your-name" required maxlength="120">
+      </label>
+      <label>
+        Your email
+        <input type="email" id="invite-your-email" required maxlength="254">
+      </label>
+      <label>
+        Your friend's name
+        <input type="text" id="invite-friend-name" required maxlength="120">
+      </label>
+      <label>
+        Your friend's email
+        <input type="email" id="invite-friend-email" required maxlength="254">
+      </label>
+      <button type="submit" class="btn-primary">Send invite</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="duplicate-overlay">
+  <div class="modal">
+    <button class="modal-close" type="button" data-close-modal>&times;</button>
+    <h2 id="duplicate-heading">Slow down a little</h2>
+    <p id="duplicate-message"></p>
+  </div>
+</div>
+{% endblock %}
