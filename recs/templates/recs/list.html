@@ -11,7 +11,12 @@
   <div class="nav-actions">
     <button id="karma-check-btn" type="button" class="btn-pill">Check your Karma</button>
     <button id="felt-note-btn" type="button" class="btn-pill">&lt;3 Felt Note</button>
-    <a href="{% url 'recs:index' %}" class="btn-pill">&larr; Home</a>
+    <a href="{% url 'recs:index' %}" class="btn-pill btn-icon" aria-label="Home">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 11.5 12 4l8 7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6 10v9.5h5V14h2v5.5h5V10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
   </div>
 </nav>
 
@@ -51,7 +56,7 @@
             <input type="checkbox" class="rec-select" data-id="{{ rec.id }}" data-title="{{ rec.title }}" data-type-label="{{ rec.get_type_label }}" data-description="{{ rec.description }}">
           </td>
           <td class="rec-title-cell">{{ rec.title }}</td>
-          <td><span class="rec-type-badge">{{ rec.get_type_label }}</span></td>
+          <td class="rec-type-cell"><span class="rec-type-badge">{{ rec.get_type_label }}</span></td>
           <td class="rec-description-cell">{{ rec.description }}</td>
           <td class="col-love">
             <button class="btn-love" type="button" data-rec-id="{{ rec.id }}" data-rec-title="{{ rec.title }}" aria-label="Send love to {{ rec.name }}">

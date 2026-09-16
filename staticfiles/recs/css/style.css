@@ -35,24 +35,10 @@ img { max-width: 100%; }
 }
 
 main {
-  position: relative;
-  z-index: 1;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-}
-
-#particles-js {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-#particles-js canvas {
-  width: 100%;
-  height: 100%;
 }
 
 /* ---------- Top nav ---------- */
@@ -104,6 +90,20 @@ main {
 
 .btn-pill:hover {
   background: #fafafa;
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 37px;
+  height: 37px;
+  padding: 0;
+}
+
+.btn-icon svg {
+  width: 18px;
+  height: 18px;
 }
 
 .btn-view-list {
@@ -383,9 +383,9 @@ main {
 
 .karma-explainer {
   width: 100%;
-  max-width: 420px;
+  max-width: 720px;
   text-align: left;
-  margin-bottom: 40px;
+  margin: 26px 0 44px;
 }
 
 .karma-explainer-heading {
@@ -796,6 +796,69 @@ main {
     margin-left: 14px;
     text-align: left;
     padding: 14px 0;
+  }
+
+  /* Collapse the recommendations table into stacked cards so nothing
+     scrolls horizontally on small screens. */
+  .table-wrap {
+    overflow-x: visible;
+    border: none;
+    background: transparent;
+  }
+
+  .rec-table {
+    min-width: 0;
+    width: 100%;
+    display: block;
+  }
+
+  .rec-table thead {
+    display: none;
+  }
+
+  .rec-table tbody {
+    display: block;
+  }
+
+  .rec-table tbody tr {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "select title love"
+      "select type love"
+      "desc desc desc";
+    column-gap: 12px;
+    row-gap: 8px;
+    align-items: start;
+    background: var(--card-bg);
+    border: 2px solid;
+    border-image: var(--neon) 1;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .rec-table tbody tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .rec-table tbody td {
+    display: block;
+    padding: 0;
+    border-bottom: none;
+    font-size: 0.9rem;
+  }
+
+  .rec-table .col-select { grid-area: select; }
+  .rec-title-cell { grid-area: title; align-self: center; }
+  .rec-type-cell { grid-area: type; }
+  .rec-description-cell { grid-area: desc; max-width: none; }
+  .rec-table .col-love { grid-area: love; text-align: right; }
+
+  .rec-table tbody tr:has(.empty-state) {
+    display: block;
+    border: none;
+    background: transparent;
+    padding: 0;
   }
 }
 
