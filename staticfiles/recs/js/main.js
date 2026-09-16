@@ -57,7 +57,45 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   initHomePage();
+  initKarmaCheck();
 });
+
+function initKarmaCheck() {
+  const karmaCheckBtn = document.getElementById("karma-check-btn");
+  const karmaForm = document.getElementById("karma-form");
+  const karmaResult = document.getElementById("karma-result");
+  const karmaCountValue = document.getElementById("karma-count-value");
+  if (!karmaCheckBtn || !karmaForm) return;
+
+  karmaCheckBtn.addEventListener("click", () => {
+    karmaForm.reset();
+    karmaForm.classList.remove("hidden");
+    karmaResult.classList.add("hidden");
+    openModal("karma-overlay");
+  });
+
+  karmaForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const submitBtn = karmaForm.querySelector("button[type=submit]");
+    submitBtn.disabled = true;
+
+    const { ok, payload } = await postJSON("/api/karma/", {
+      email: document.getElementById("karma-email").value.trim(),
+    });
+
+    submitBtn.disabled = false;
+
+    if (!ok) {
+      showToast(payload.message || "Couldn't look that up.", true);
+      return;
+    }
+
+    karmaCountValue.textContent = payload.points;
+    karmaForm.classList.add("hidden");
+    karmaResult.classList.remove("hidden");
+  });
+}
 
 function showDuplicateModal(fromOverlayId, message) {
   if (fromOverlayId) closeModal(fromOverlayId);

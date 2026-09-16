@@ -5,7 +5,10 @@
 {% block content %}
 <nav class="topnav">
   <a href="{% url 'recs:index' %}" class="brand pixel">NPC Lobby</a>
-  <a href="{% url 'recs:index' %}" class="btn-pill">&larr; Home</a>
+  <div class="nav-actions">
+    <button id="karma-check-btn" type="button" class="btn-pill">Check your Karma</button>
+    <a href="{% url 'recs:index' %}" class="btn-pill">&larr; Home</a>
+  </div>
 </nav>
 
 <div class="list-page">

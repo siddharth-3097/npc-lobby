@@ -15,6 +15,26 @@
 <main>
 {% block content %}{% endblock %}
 </main>
+
+<div class="modal-overlay" id="karma-overlay">
+  <div class="modal">
+    <button class="modal-close" type="button" data-close-modal>&times;</button>
+    <h2>Check your Karma</h2>
+    <p class="modal-subtitle">See how much good taste you've earned.</p>
+    <form id="karma-form">
+      <label>
+        Your email
+        <input type="email" id="karma-email" required maxlength="254">
+      </label>
+      <button type="submit" class="btn-primary">Check</button>
+    </form>
+    <div id="karma-result" class="karma-result hidden">
+      <div class="karma-emoji">&#127881;</div>
+      <div class="karma-count pixel" id="karma-count-value">0</div>
+      <div class="karma-label">karma</div>
+    </div>
+  </div>
+</div>
 <script>window.CSRF_TOKEN = "{{ csrf_token }}";</script>
 <script src="{% static 'recs/js/main.js' %}?v={% now 'U' %}"></script>
 {% block extra_js %}{% endblock %}

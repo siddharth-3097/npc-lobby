@@ -250,3 +250,26 @@ def invite_friend(request):
     send_invite_email(invite)
 
     return JsonResponse({"status": "ok", "message": f"Invite sent to {friend_name}!"})
+
+
+@require_POST
+def check_karma(request):
+    try:
+        data = json.loads(request.body or "{}")
+    except json.JSONDecodeError:
+        return _bad_request("Malformed request.")
+
+    email = (data.get("email") or "").strip()
+
+    if not email:
+        return _bad_request("We need an email to check.")
+
+    try:
+        validate_email(email)
+    except ValidationError:
+        return _bad_request("That email doesn't look right.")
+
+    karma = Karma.objects.filter(email=email.lower()).first()
+    points = karma.points if karma else 0
+
+    return JsonResponse({"status": "ok", "points": points})
