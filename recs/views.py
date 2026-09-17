@@ -11,6 +11,7 @@ from .emails import (
     send_contribution_email,
     send_invite_email,
     send_love_email,
+    send_thank_you_confirmation_email,
     send_welcome_email,
     send_your_list_email,
 )
@@ -196,6 +197,9 @@ def thank_you(request):
     )
     Karma.add(sender_email)
     send_love_email(recommendation, sender_name)
+
+    karma_total = Karma.objects.get(email=sender_email.strip().lower()).points
+    send_thank_you_confirmation_email(sender_name, sender_email, karma_total)
 
     return JsonResponse({"status": "ok", "message": "Thank you sent!"})
 

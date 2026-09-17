@@ -67,6 +67,16 @@ def send_love_email(recommendation, liker_name):
     return send_email(recommendation.email, subject, text)
 
 
+def send_thank_you_confirmation_email(sender_name, sender_email, karma_total):
+    subject = "you just earned karma"
+    text = (
+        f"hey {sender_name}- to like is human, to thank divine. "
+        f"+1 karma for u, for appreciating someone's taste. "
+        f"your karma balance is now {karma_total}"
+    )
+    return send_email(sender_email, subject, text)
+
+
 def send_invite_email(invite):
     subject = "you have been invited to NPC Lobby"
     text = (
