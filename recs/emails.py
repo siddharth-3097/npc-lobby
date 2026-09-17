@@ -43,7 +43,7 @@ def send_welcome_email(recommendation):
         "Over the coming weeks, I hope we get to see more of your taste here\n\n"
         "+1 karma from me"
     )
-    send_email(recommendation.email, subject, text)
+    return send_email(recommendation.email, subject, text)
 
 
 def send_contribution_email(recommendation, contribution_number, karma_total):
@@ -54,7 +54,7 @@ def send_contribution_email(recommendation, contribution_number, karma_total):
         f"+1 karma for {recommendation.title}\n\n"
         f"you have collected {karma_total} so far. hope to see more from you tomorrow"
     )
-    send_email(recommendation.email, subject, text)
+    return send_email(recommendation.email, subject, text)
 
 
 def send_love_email(recommendation, liker_name):
@@ -64,7 +64,7 @@ def send_love_email(recommendation, liker_name):
         f"{liker_name} liked your recommendation- {recommendation.title}\n\n"
         "keep them coming! Cheers"
     )
-    send_email(recommendation.email, subject, text)
+    return send_email(recommendation.email, subject, text)
 
 
 def send_invite_email(invite):
@@ -74,7 +74,7 @@ def send_invite_email(invite):
         f"{invite.inviter_name} told me that you have a lot of cool stuff to share\n\n"
         f"NPC Lobby is waiting for it, dying for it- pls join in here {settings.SITE_URL}"
     )
-    send_email(invite.friend_email, subject, text)
+    return send_email(invite.friend_email, subject, text)
 
 
 def send_your_list_email(email, recommendations):
