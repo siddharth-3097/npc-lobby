@@ -151,6 +151,21 @@ def send_invite_email(invite):
     return send_email(invite.friend_email, subject, text, html)
 
 
+def send_weekly_tier_progress_email(email, name, points_away, tier_name, teaser):
+    subject = f"you're closer to {tier_name}"
+    text = (
+        f"hey {name}, thanks for making NPC Lobby tasteful. "
+        f"you're {points_away} karma points away from {tier_name}. "
+        f"{teaser}"
+    )
+    html = _html_document([
+        f"hey {escape(name)}, thanks for making NPC Lobby tasteful. "
+        f"you're <strong>{points_away}</strong> karma points away from <strong>{tier_name}</strong>. "
+        f"<em>{escape(teaser)}</em>"
+    ])
+    return send_email(email, subject, text, html)
+
+
 def send_your_list_email(email, recommendations):
     lines = ["Here's your NPC Lobby list: 📋\n"]
     for rec in recommendations:

@@ -100,6 +100,11 @@ class KarmaTier(models.Model):
     threshold = models.PositiveIntegerField(unique=True, help_text="Karma points required to reach this tier")
     tier_name = models.CharField(max_length=60)
     unlock_text = models.CharField(max_length=200, help_text="Shown under the tier name, emoji included")
+    email_teaser = models.CharField(
+        max_length=200,
+        blank=True,
+        help_text="Closing line for the weekly 'you're close to a tier' email",
+    )
 
     class Meta:
         ordering = ["threshold"]

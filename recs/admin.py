@@ -31,6 +31,6 @@ class InviteAdmin(admin.ModelAdmin):
 
 @admin.register(KarmaTier)
 class KarmaTierAdmin(admin.ModelAdmin):
-    list_display = ("threshold", "tier_name", "unlock_text")
+    list_display = ("threshold", "tier_name", "unlock_text", "email_teaser")
     ordering = ("threshold",)
-    list_editable = ("tier_name", "unlock_text")
+    list_editable = ("tier_name", "unlock_text", "email_teaser")

@@ -1,9 +1,10 @@
 import json
 import random
 
+from django.conf import settings
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from django.http import JsonResponse
+from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
@@ -17,6 +18,7 @@ from .emails import (
     send_your_list_email,
 )
 from .models import Invite, Karma, KarmaTier, Recommendation, ThankYou
+from .tier_progress import send_weekly_tier_progress_emails
 
 DAILY_THANK_YOU_LIMIT = 2
 DAILY_INVITE_LIMIT = 3
@@ -302,3 +304,17 @@ def check_karma(request):
     points = karma.points if karma else 0
 
     return JsonResponse({"status": "ok", "points": points})
+
+
+@require_GET
+def cron_weekly_tier_progress(request):
+    """Hit by Vercel Cron every Sunday. Protected by CRON_SECRET so it can't
+    be triggered by anyone who finds the URL.
+    """
+    if settings.CRON_SECRET:
+        auth_header = request.headers.get("Authorization", "")
+        if auth_header != f"Bearer {settings.CRON_SECRET}":
+            return HttpResponseForbidden("Forbidden")
+
+    sent = send_weekly_tier_progress_emails()
+    return JsonResponse({"status": "ok", "sent": sent})

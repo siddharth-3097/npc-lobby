@@ -214,6 +214,11 @@ RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
 
 SITE_URL = os.environ.get('SITE_URL', 'https://www.npclobby.in')
 
+# Shared secret Vercel Cron sends as `Authorization: Bearer <value>` when it
+# calls the cron endpoint below, so the endpoint can't be triggered by anyone
+# else. Left unset in local dev, where the endpoint is left open.
+CRON_SECRET = os.environ.get('CRON_SECRET', '')
+
 # PostHog (https://posthog.com) product analytics. The project key is a
 # public, client-side identifier (not a secret) — PostHog's own install
 # snippet expects it embedded in page source. Still kept configurable via
