@@ -16,7 +16,7 @@ from .emails import (
     send_welcome_email,
     send_your_list_email,
 )
-from .models import Invite, Karma, Recommendation, ThankYou
+from .models import Invite, Karma, KarmaTier, Recommendation, ThankYou
 
 DAILY_THANK_YOU_LIMIT = 2
 DAILY_INVITE_LIMIT = 3
@@ -43,7 +43,11 @@ def index(request):
     return render(
         request,
         "recs/index.html",
-        {"type_choices": Recommendation.TYPE_CHOICES, "npc_sprite_path": npc_sprite_path},
+        {
+            "type_choices": Recommendation.TYPE_CHOICES,
+            "npc_sprite_path": npc_sprite_path,
+            "karma_tiers": KarmaTier.objects.all(),
+        },
     )
 
 
@@ -123,6 +127,11 @@ def submit_recommendation(request):
 
     contribution_number = Recommendation.objects.filter(email__iexact=email).count()
     if contribution_number == 1:
+        inviter_emails = Invite.objects.filter(friend_email__iexact=email).values_list(
+            "inviter_email", flat=True
+        )
+        for inviter_email in {e.strip().lower() for e in inviter_emails}:
+            Karma.add(inviter_email)
         send_welcome_email(recommendation)
     else:
         karma_total = Karma.objects.get(email=email.strip().lower()).points
@@ -267,7 +276,6 @@ def invite_friend(request):
         friend_name=friend_name,
         friend_email=friend_email,
     )
-    Karma.add(inviter_email)
     send_invite_email(invite)
 
     return JsonResponse({"status": "ok", "message": f"Invite sent to {friend_name}!"})

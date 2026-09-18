@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Invite, Karma, Recommendation, ThankYou
+from .models import Invite, Karma, KarmaTier, Recommendation, ThankYou
 
 
 @admin.register(Recommendation)
@@ -27,3 +27,10 @@ class KarmaAdmin(admin.ModelAdmin):
 class InviteAdmin(admin.ModelAdmin):
     list_display = ("inviter_name", "inviter_email", "friend_name", "friend_email", "created_at")
     search_fields = ("inviter_name", "inviter_email", "friend_name", "friend_email")
+
+
+@admin.register(KarmaTier)
+class KarmaTierAdmin(admin.ModelAdmin):
+    list_display = ("threshold", "tier_name", "unlock_text")
+    ordering = ("threshold",)
+    list_editable = ("tier_name", "unlock_text")

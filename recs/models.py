@@ -94,3 +94,15 @@ class Karma(models.Model):
         email = email.strip().lower()
         obj, _ = cls.objects.get_or_create(email=email)
         cls.objects.filter(pk=obj.pk).update(points=models.F("points") + amount)
+
+
+class KarmaTier(models.Model):
+    threshold = models.PositiveIntegerField(unique=True, help_text="Karma points required to reach this tier")
+    tier_name = models.CharField(max_length=60)
+    unlock_text = models.CharField(max_length=200, help_text="Shown under the tier name, emoji included")
+
+    class Meta:
+        ordering = ["threshold"]
+
+    def __str__(self):
+        return f"{self.threshold} — {self.tier_name}"

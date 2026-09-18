@@ -1,5 +1,5 @@
 {% extends "recs/base.html" %}
-{% load static %}
+{% load static humanize %}
 {% block title %}NPC Lobby{% endblock %}
 
 {% block content %}
@@ -104,6 +104,7 @@
     </div>
 
     <div class="checkpoint-track">
+      {% for tier in karma_tiers %}
       <div class="checkpoint">
         <div class="checkpoint-connector">
           <span class="checkpoint-line before"></span>
@@ -111,95 +112,12 @@
           <span class="checkpoint-line after"></span>
         </div>
         <div class="checkpoint-body">
-          <div class="checkpoint-karma">100</div>
-          <div class="checkpoint-tier">Lurker</div>
-          <div class="checkpoint-unlock">&#128274; access to our private Discord</div>
+          <div class="checkpoint-karma">{{ tier.threshold|intcomma }}</div>
+          <div class="checkpoint-tier">{{ tier.tier_name }}</div>
+          <div class="checkpoint-unlock">{{ tier.unlock_text }}</div>
         </div>
       </div>
-      <div class="checkpoint">
-        <div class="checkpoint-connector">
-          <span class="checkpoint-line before"></span>
-          <span class="checkpoint-dot"></span>
-          <span class="checkpoint-line after"></span>
-        </div>
-        <div class="checkpoint-body">
-          <div class="checkpoint-karma">200</div>
-          <div class="checkpoint-tier">Plug</div>
-          <div class="checkpoint-unlock">&#9749; your next coffee is our treat</div>
-        </div>
-      </div>
-      <div class="checkpoint">
-        <div class="checkpoint-connector">
-          <span class="checkpoint-line before"></span>
-          <span class="checkpoint-dot"></span>
-          <span class="checkpoint-line after"></span>
-        </div>
-        <div class="checkpoint-body">
-          <div class="checkpoint-karma">500</div>
-          <div class="checkpoint-tier">Scout</div>
-          <div class="checkpoint-unlock">&#127871; your next movie ticket is covered</div>
-        </div>
-      </div>
-      <div class="checkpoint">
-        <div class="checkpoint-connector">
-          <span class="checkpoint-line before"></span>
-          <span class="checkpoint-dot"></span>
-          <span class="checkpoint-line after"></span>
-        </div>
-        <div class="checkpoint-body">
-          <div class="checkpoint-karma">750</div>
-          <div class="checkpoint-tier">Curator</div>
-          <div class="checkpoint-unlock">&#127916; join the team for movie night</div>
-        </div>
-      </div>
-      <div class="checkpoint">
-        <div class="checkpoint-connector">
-          <span class="checkpoint-line before"></span>
-          <span class="checkpoint-dot"></span>
-          <span class="checkpoint-line after"></span>
-        </div>
-        <div class="checkpoint-body">
-          <div class="checkpoint-karma">1,000</div>
-          <div class="checkpoint-tier">Tastemaker</div>
-          <div class="checkpoint-unlock">&#128218; your next book is on us</div>
-        </div>
-      </div>
-      <div class="checkpoint">
-        <div class="checkpoint-connector">
-          <span class="checkpoint-line before"></span>
-          <span class="checkpoint-dot"></span>
-          <span class="checkpoint-line after"></span>
-        </div>
-        <div class="checkpoint-body">
-          <div class="checkpoint-karma">2,000</div>
-          <div class="checkpoint-tier">Connoisseur</div>
-          <div class="checkpoint-unlock">&#128085; exclusive member merch</div>
-        </div>
-      </div>
-      <div class="checkpoint">
-        <div class="checkpoint-connector">
-          <span class="checkpoint-line before"></span>
-          <span class="checkpoint-dot"></span>
-          <span class="checkpoint-line after"></span>
-        </div>
-        <div class="checkpoint-body">
-          <div class="checkpoint-karma">5,000</div>
-          <div class="checkpoint-tier">Cult Figure</div>
-          <div class="checkpoint-unlock">&#128191; our vinyl pick of the month, delivered to you</div>
-        </div>
-      </div>
-      <div class="checkpoint">
-        <div class="checkpoint-connector">
-          <span class="checkpoint-line before"></span>
-          <span class="checkpoint-dot"></span>
-          <span class="checkpoint-line after"></span>
-        </div>
-        <div class="checkpoint-body">
-          <div class="checkpoint-karma">10,000</div>
-          <div class="checkpoint-tier">God Tier</div>
-          <div class="checkpoint-unlock">&#9889; the ultimate recommendation hamper</div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
 
     <button id="invite-friend-btn" type="button" class="btn-view-list pixel">Invite a Friend</button>
