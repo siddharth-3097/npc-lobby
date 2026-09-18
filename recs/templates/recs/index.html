@@ -16,7 +16,7 @@
 
 <div class="home">
   <div class="lobby-stage">
-    <img src="{% static 'recs/img/npc-frog.gif' %}" alt="Pixel-art animated frog" class="npc-sprite">
+    <img src="{% static npc_sprite_path %}" alt="Pixel-art animated NPC" class="npc-sprite">
   </div>
 
   <h1 class="wordmark pixel">NPC LOBBY</h1>
@@ -84,10 +84,23 @@
 
     <div class="karma-explainer">
       <h3 class="karma-explainer-heading">how karma works</h3>
-      <p>+1 everytime you recommend what you really loved. one per day, there's no rush, we'll still be there tomorrow.</p>
-      <p>+1 everytime you thank someone for their recommendation. twice a day max- enjoy what you experience, someone took the time to do so and share with the world.</p>
-      <p>+1 for every friend you bring to the lobby. 3 per day. more the merrier, but we are allergic to crowds.</p>
-      <p>that's really it. recommend what you feel is genuinely enjoyable. we don't curate, or judge, we want you to mean it. karma adds up on its own.</p>
+
+      <div class="karma-rules">
+        <div class="karma-rule-card">
+          <div class="karma-rule-plus pixel">+1</div>
+          <p>everytime you recommend what you really loved. one per day, there's no rush, we'll still be there tomorrow.</p>
+        </div>
+        <div class="karma-rule-card">
+          <div class="karma-rule-plus pixel">+1</div>
+          <p>everytime you thank someone for their recommendation. twice a day max- enjoy what you experience, someone took the time to do so and share with the world.</p>
+        </div>
+        <div class="karma-rule-card">
+          <div class="karma-rule-plus pixel">+1</div>
+          <p>for every friend you bring to the lobby. 3 per day. more the merrier, but we are allergic to crowds.</p>
+        </div>
+      </div>
+
+      <p class="karma-explainer-closing">that's really it. recommend what you feel is genuinely enjoyable. we don't curate, or judge, we want you to mean it. karma adds up on its own.</p>
     </div>
 
     <div class="checkpoint-track">

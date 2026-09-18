@@ -1,4 +1,5 @@
 import json
+import random
 
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -25,9 +26,25 @@ def _bad_request(message):
     return JsonResponse({"status": "error", "message": message}, status=400)
 
 
+NPC_SPRITES = [
+    "npc-frog.gif",
+    "npc-chicken.gif",
+    "npc-mario.gif",
+    "npc-yugi.gif",
+    "npc-catpaw.gif",
+    "npc-imok.gif",
+    "npc-waifu.gif",
+]
+
+
 @require_GET
 def index(request):
-    return render(request, "recs/index.html", {"type_choices": Recommendation.TYPE_CHOICES})
+    npc_sprite_path = f"recs/img/{random.choice(NPC_SPRITES)}"
+    return render(
+        request,
+        "recs/index.html",
+        {"type_choices": Recommendation.TYPE_CHOICES, "npc_sprite_path": npc_sprite_path},
+    )
 
 
 @require_GET

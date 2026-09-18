@@ -1,0 +1,11 @@
+chicken- https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcmp5YXFtd2g3YWRoc3I4enZwNm52eTF5dTV1cWRoZDEwOGYxN3hhZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/U6ox2q5d8NgDwKnTLT/giphy.gif
+
+mario- https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnQyYmo2M2xldmQza3lyMWhmYmd5ZWF6cGMzb3ZlNzBvNnFwZHk3OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hoIFd5c6YIAFv8yedH/giphy.gif
+
+yugi- https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXdlN24xdjkyeWF2cWtxczR1bzhpcGo1OW1hczBvZzlnZmRxaWhoMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/T5fTSL8BRVBVVSreBw/giphy.gif
+
+cat paw- https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGY5dGJrdTlza2MxbzZkeG1lZDUyNWV3M3pyMGk1aDFhYWE0c3llbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3UPNs8vXyJESQ/giphy.gif
+
+im ok- https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExc3U5Nm54bjZyMWF2dXZvajMweXM0cGtsZWdkaWljbnBhdHd6ZHBnYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6ggbCzAotIx43ey4/giphy.gif
+
+waifu- https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExb25yeTY1NXZzNDlrcmpmd2RyZDZzd3I0OHZzMjhvazg2OWNjeGlnaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/3KuGWuj0XMYqeCmbKG/giphy.gif
