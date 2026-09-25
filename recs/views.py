@@ -57,7 +57,9 @@ def index(request):
 
 @require_GET
 def list_view(request):
-    recommendations = Recommendation.objects.annotate(thank_count=Count("thank_yous"))
+    recommendations = Recommendation.objects.annotate(thank_count=Count("thank_yous")).order_by(
+        "-created_at"
+    )
     return render(
         request,
         "recs/list.html",
