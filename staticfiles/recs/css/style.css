@@ -298,6 +298,49 @@ main {
   line-height: 1.5;
 }
 
+/* ---------- Thumbnail carousel ---------- */
+
+.thumb-carousel {
+  width: 100%;
+  max-width: 1120px;
+  margin: 8px 0 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.thumb-carousel-track {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: max-content;
+  animation: thumb-carousel-scroll 32s linear infinite;
+}
+
+.thumb-carousel:hover .thumb-carousel-track {
+  animation-play-state: paused;
+}
+
+.thumb-carousel-item {
+  flex: none;
+  display: block;
+}
+
+.thumb-carousel-item img {
+  display: block;
+  height: 92px;
+  width: 66px;
+  object-fit: cover;
+  border: 1px solid;
+  border-image: var(--neon) 1;
+  image-rendering: auto;
+}
+
+@keyframes thumb-carousel-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 /* ---------- Karma checkpoints ---------- */
 
 .checkpoints-section {
@@ -667,9 +710,45 @@ main {
   width: 40px;
 }
 
+.rec-table .col-thumb {
+  width: 56px;
+}
+
 .rec-table .col-love {
   width: 50px;
   text-align: center;
+}
+
+.thumb-link {
+  position: relative;
+  display: block;
+  width: 44px;
+  height: 44px;
+}
+
+.thumb-img {
+  display: block;
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border: 1px solid;
+  border-image: var(--neon) 1;
+}
+
+.thumb-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: rgba(17, 17, 17, 0.35);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.thumb-link:hover .thumb-play {
+  opacity: 1;
 }
 
 .rec-select {
@@ -700,6 +779,18 @@ main {
   color: var(--ink-dim);
   max-width: 380px;
   overflow-wrap: break-word;
+}
+
+.love-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.love-count {
+  font-size: 0.78rem;
+  color: var(--ink-dim);
+  min-width: 0.7em;
 }
 
 .btn-love {
@@ -847,11 +938,11 @@ main {
 
   .rec-table tbody tr {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto auto 1fr auto;
     grid-template-areas:
-      "select title love"
-      "select type love"
-      "desc desc desc";
+      "thumb select title love"
+      "thumb select type love"
+      "desc desc desc desc";
     column-gap: 12px;
     row-gap: 8px;
     align-items: start;
@@ -873,6 +964,7 @@ main {
     font-size: 0.9rem;
   }
 
+  .rec-table .col-thumb { grid-area: thumb; align-self: center; }
   .rec-table .col-select { grid-area: select; }
   .rec-title-cell { grid-area: title; align-self: center; }
   .rec-type-cell { grid-area: type; }
@@ -906,6 +998,8 @@ main {
   .tagline { font-size: 0.85rem; margin-bottom: 28px; }
   .lobby-stage { height: 84px; }
   .npc-sprite { height: 76px; }
+  .thumb-carousel-item img { height: 68px; width: 48px; }
+  .thumb-carousel-track { gap: 10px; }
   #kickoff-input { padding: 15px 52px 15px 18px; font-size: 0.9rem; }
   .kickoff-submit { width: 34px; height: 34px; right: 6px; }
   .kickoff-submit svg { width: 14px; height: 14px; }
