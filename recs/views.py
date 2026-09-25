@@ -3,6 +3,7 @@ import random
 
 from django.conf import settings
 from django.core.validators import validate_email
+from django.db.models import Count
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import render
@@ -49,13 +50,14 @@ def index(request):
             "type_choices": Recommendation.TYPE_CHOICES,
             "npc_sprite_path": npc_sprite_path,
             "karma_tiers": KarmaTier.objects.all(),
+            "carousel_items": Recommendation.objects.exclude(thumbnail_url="").order_by("-created_at"),
         },
     )
 
 
 @require_GET
 def list_view(request):
-    recommendations = Recommendation.objects.all()
+    recommendations = Recommendation.objects.annotate(thank_count=Count("thank_yous"))
     return render(
         request,
         "recs/list.html",

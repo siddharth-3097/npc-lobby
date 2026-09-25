@@ -43,6 +43,7 @@
       <thead>
         <tr>
           <th class="col-select"></th>
+          <th class="col-thumb"></th>
           <th>Recommendation</th>
           <th>Type</th>
           <th>Description</th>
@@ -55,20 +56,37 @@
           <td class="col-select">
             <input type="checkbox" class="rec-select" data-id="{{ rec.id }}" data-title="{{ rec.title }}" data-type-label="{{ rec.get_type_label }}" data-description="{{ rec.description }}">
           </td>
+          <td class="col-thumb">
+            {% if rec.thumbnail_url %}
+              {% if rec.access_url %}
+              <a class="thumb-link" href="{{ rec.access_url }}" target="_blank" rel="noopener noreferrer" aria-label="Watch or read {{ rec.title }}">
+                <img src="{{ rec.thumbnail_url }}" alt="{{ rec.title }}" class="thumb-img" loading="lazy">
+                <span class="thumb-play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                </span>
+              </a>
+              {% else %}
+              <img src="{{ rec.thumbnail_url }}" alt="{{ rec.title }}" class="thumb-img" loading="lazy">
+              {% endif %}
+            {% endif %}
+          </td>
           <td class="rec-title-cell">{{ rec.title }}</td>
           <td class="rec-type-cell"><span class="rec-type-badge">{{ rec.get_type_label }}</span></td>
           <td class="rec-description-cell">{{ rec.description }}</td>
           <td class="col-love">
-            <button class="btn-love" type="button" data-rec-id="{{ rec.id }}" data-rec-title="{{ rec.title }}" aria-label="Send love to {{ rec.name }}">
-              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-              </svg>
-            </button>
+            <span class="love-cell">
+              <button class="btn-love" type="button" data-rec-id="{{ rec.id }}" data-rec-title="{{ rec.title }}" aria-label="Send love to {{ rec.name }}">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </button>
+              <span class="love-count">{% if rec.thank_count %}{{ rec.thank_count }}{% endif %}</span>
+            </span>
           </td>
         </tr>
         {% empty %}
         <tr>
-          <td colspan="5" class="empty-state">No recommendations yet. Be the first NPC to speak up!</td>
+          <td colspan="6" class="empty-state">No recommendations yet. Be the first NPC to speak up!</td>
         </tr>
         {% endfor %}
       </tbody>

@@ -33,6 +33,8 @@ class Recommendation(models.Model):
     other_type_label = models.CharField(max_length=60, blank=True)
     title = models.CharField(max_length=200, help_text="The thing being recommended")
     description = models.TextField(help_text="Who will love it and why")
+    thumbnail_url = models.URLField(blank=True, help_text="Poster/cover image shown in the list and home carousel")
+    access_url = models.URLField(blank=True, help_text="Where to watch/read/buy this — the play button links here")
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:

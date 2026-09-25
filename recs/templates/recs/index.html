@@ -78,6 +78,23 @@
     </div>
   </div>
 
+  {% if carousel_items %}
+  <div class="thumb-carousel">
+    <div class="thumb-carousel-track">
+      {% for item in carousel_items %}
+      <a class="thumb-carousel-item" href="{{ item.access_url|default:'#' }}" target="_blank" rel="noopener noreferrer" aria-label="{{ item.title }}">
+        <img src="{{ item.thumbnail_url }}" alt="{{ item.title }}" loading="lazy">
+      </a>
+      {% endfor %}
+      {% for item in carousel_items %}
+      <a class="thumb-carousel-item" href="{{ item.access_url|default:'#' }}" target="_blank" rel="noopener noreferrer" aria-hidden="true" tabindex="-1">
+        <img src="{{ item.thumbnail_url }}" alt="" loading="lazy">
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
   <div class="checkpoints-section">
     <h2 class="pixel section-heading">KARMA CHECKPOINTS</h2>
     <p class="tagline">climb the ranks by putting people onto good stuff</p>

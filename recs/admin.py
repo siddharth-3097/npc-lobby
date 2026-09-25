@@ -5,9 +5,10 @@ from .models import Invite, Karma, KarmaTier, Recommendation, ThankYou
 
 @admin.register(Recommendation)
 class RecommendationAdmin(admin.ModelAdmin):
-    list_display = ("title", "rec_type", "name", "email", "created_at")
+    list_display = ("title", "rec_type", "name", "email", "thumbnail_url", "access_url", "created_at")
     list_filter = ("rec_type", "created_at")
     search_fields = ("title", "name", "email", "description")
+    list_editable = ("thumbnail_url", "access_url")
 
 
 @admin.register(ThankYou)

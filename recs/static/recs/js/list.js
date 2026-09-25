@@ -110,6 +110,12 @@ document.addEventListener("DOMContentLoaded", () => {
       originalBtn.disabled = true;
       originalBtn.classList.add("loved");
       originalBtn.setAttribute("aria-label", "Thanked");
+
+      const countEl = originalBtn.closest(".love-cell").querySelector(".love-count");
+      if (countEl) {
+        const current = parseInt(countEl.textContent, 10) || 0;
+        countEl.textContent = current + 1;
+      }
     }
     activeThankYouId = null;
   });
