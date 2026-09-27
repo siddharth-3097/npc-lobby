@@ -13,4 +13,8 @@ urlpatterns = [
     path("api/invite/", views.invite_friend, name="invite"),
     path("api/karma/", views.check_karma, name="check_karma"),
     path("api/cron/weekly-tier-progress/", views.cron_weekly_tier_progress, name="cron_weekly_tier_progress"),
+    path("quiz/", views.quiz_view, name="quiz"),
+    path("quiz/api/questions/", views.quiz_questions_api, name="quiz_questions_api"),
+    path("quiz/api/submit/", views.quiz_submit, name="quiz_submit"),
+    path("quiz/test/", views.quiz_test_view, name="quiz_test"),
 ]

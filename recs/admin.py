@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Invite, Karma, KarmaTier, Recommendation, ThankYou
+from .models import Invite, Karma, KarmaTier, QuizAttempt, QuizQuestion, Recommendation, ThankYou
 
 
 @admin.register(Recommendation)
@@ -35,3 +35,19 @@ class KarmaTierAdmin(admin.ModelAdmin):
     list_display = ("threshold", "tier_name", "unlock_text", "email_teaser")
     ordering = ("threshold",)
     list_editable = ("tier_name", "unlock_text", "email_teaser")
+
+
+@admin.register(QuizQuestion)
+class QuizQuestionAdmin(admin.ModelAdmin):
+    list_display = ("movie_title", "style", "prompt", "correct_option", "active", "review_note")
+    list_filter = ("style", "active")
+    search_fields = ("movie_title", "prompt", "review_note")
+    list_editable = ("active", "review_note")
+    ordering = ("movie_title", "id")
+
+
+@admin.register(QuizAttempt)
+class QuizAttemptAdmin(admin.ModelAdmin):
+    list_display = ("name", "email", "score", "total_questions", "created_at")
+    search_fields = ("name", "email")
+    ordering = ("-score", "created_at")

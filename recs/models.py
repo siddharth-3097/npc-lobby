@@ -98,6 +98,61 @@ class Karma(models.Model):
         cls.objects.filter(pk=obj.pk).update(points=models.F("points") + amount)
 
 
+class QuizQuestion(models.Model):
+    STYLE_EMOJI = "emoji"
+    STYLE_QUOTE = "quote"
+    STYLE_CHARACTER = "character"
+    STYLE_PLOT = "plot"
+
+    STYLE_CHOICES = [
+        (STYLE_EMOJI, "Emoji clue"),
+        (STYLE_QUOTE, "Dialogue quote"),
+        (STYLE_CHARACTER, "Character/actor"),
+        (STYLE_PLOT, "Plot descriptor"),
+    ]
+
+    OPTION_CHOICES = [("a", "A"), ("b", "B"), ("c", "C")]
+
+    movie_title = models.CharField(max_length=120, help_text="Which title from the quiz list this is about")
+    style = models.CharField(max_length=20, choices=STYLE_CHOICES, default=STYLE_PLOT)
+    prompt = models.TextField()
+    option_a = models.CharField(max_length=150)
+    option_b = models.CharField(max_length=150)
+    option_c = models.CharField(max_length=150)
+    correct_option = models.CharField(max_length=1, choices=OPTION_CHOICES)
+    review_note = models.CharField(
+        max_length=200, blank=True, help_text="QA flag shown only on the staff-only /quiz/test/ page"
+    )
+    active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ["movie_title", "id"]
+
+    def __str__(self):
+        return f"{self.movie_title}: {self.prompt[:50]}"
+
+    def options(self):
+        return {"a": self.option_a, "b": self.option_b, "c": self.option_c}
+
+    def correct_answer_text(self):
+        return self.options()[self.correct_option]
+
+
+class QuizAttempt(models.Model):
+    name = models.CharField(max_length=120)
+    email = models.EmailField(unique=True)
+    score = models.PositiveIntegerField()
+    total_questions = models.PositiveIntegerField(default=10)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ["-score", "created_at"]
+
+    def __str__(self):
+        return f"{self.name} <{self.email}>: {self.score}/{self.total_questions}"
+
+
 class KarmaTier(models.Model):
     threshold = models.PositiveIntegerField(unique=True, help_text="Karma points required to reach this tier")
     tier_name = models.CharField(max_length=60)

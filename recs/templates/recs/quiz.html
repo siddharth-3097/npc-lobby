@@ -1,0 +1,113 @@
+{% extends "recs/base.html" %}
+{% load static %}
+{% block title %}Sunday Karma Hoarding | NPC Lobby{% endblock %}
+
+{% block content %}
+<nav class="topnav">
+  <a href="{% url 'recs:index' %}" class="brand pixel">
+    <img src="{% static 'recs/img/npc-logo-icon.png' %}" alt="" class="brand-icon">
+    NPC Lobby
+  </a>
+  <div class="nav-actions">
+    <button id="karma-check-btn" type="button" class="btn-pill">Check your Karma</button>
+    <button id="felt-note-btn" type="button" class="btn-pill">&lt;3 Felt Note</button>
+    <a href="{% url 'recs:index' %}" class="btn-pill btn-icon" aria-label="Home">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 11.5 12 4l8 7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6 10v9.5h5V14h2v5.5h5V10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+</nav>
+
+<div class="quiz-page">
+
+  <div id="quiz-landing" class="quiz-panel">
+    <h1 class="wordmark pixel">SUNDAY KARMA HOARDING</h1>
+    <p class="tagline">guess the movie or show, hoard the karma</p>
+
+    <div class="quiz-rules">
+      <div class="quiz-rule-card">
+        <div class="quiz-rule-icon pixel">10</div>
+        <p>questions, one at a time, inspired by Kumar Varun's Buzzing with Kvizzing.</p>
+      </div>
+      <div class="quiz-rule-card">
+        <div class="quiz-rule-icon pixel">+1</div>
+        <p>for every correct answer. wrong answers cost you nothing, no penalty, ever.</p>
+      </div>
+      <div class="quiz-rule-card">
+        <div class="quiz-rule-icon pixel">+3</div>
+        <p>karma the first time you finish and submit a score. it's a one-time bonus, replays are just for fun and don't change your locked-in score.</p>
+      </div>
+    </div>
+
+    <button id="start-quiz-btn" type="button" class="btn-view-list pixel">Start Quiz</button>
+  </div>
+
+  <div id="quiz-question-panel" class="quiz-panel hidden">
+    <div class="quiz-progress" id="quiz-progress">Question 1 of {{ questions_per_attempt }}</div>
+    <div class="quiz-card">
+      <div class="quiz-emoji hidden" id="quiz-emoji"></div>
+      <p class="quiz-prompt" id="quiz-prompt"></p>
+      <div class="quiz-options" id="quiz-options"></div>
+    </div>
+    <button id="quiz-next-btn" type="button" class="btn-primary quiz-next hidden">Next question</button>
+  </div>
+
+  <div class="quiz-leaderboard-section">
+    <h2 class="pixel section-heading">LEADERBOARD</h2>
+    <p class="tagline">the sharpest NPCs in the lobby</p>
+    <div class="quiz-leaderboard" id="quiz-leaderboard">
+      {% for row in leaderboard %}
+      <div class="quiz-leaderboard-row">
+        <span class="quiz-leaderboard-rank pixel">{{ forloop.counter }}</span>
+        <span class="quiz-leaderboard-name">{{ row.name }}</span>
+        <span class="quiz-leaderboard-score">{{ row.score }}/{{ row.total_questions }}</span>
+      </div>
+      {% empty %}
+      <p class="empty-state">no one's played yet. be the first to hoard some karma.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="quiz-video-section">
+    <h2 class="pixel section-heading">THE SOURCE</h2>
+    <p class="tagline">view the full Kumar Varun video this quiz comes from</p>
+    <div class="quiz-video-embed">
+      <iframe
+        src="https://www.youtube.com/embed/XgxdBsmxBy8?si=0zzL8iYDDN9A844D"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="quiz-submit-overlay">
+  <div class="modal">
+    <button class="modal-close" type="button" data-close-modal>&times;</button>
+    <h2>Lock in your score</h2>
+    <p class="modal-subtitle">You got <strong id="quiz-final-score-echo"></strong>. Submit to join the leaderboard and grab your one-time +3 karma.</p>
+    <form id="quiz-submit-form">
+      <label>
+        Your name
+        <input type="text" id="quiz-name" required maxlength="120">
+      </label>
+      <label>
+        Your email
+        <input type="email" id="quiz-email" required maxlength="254">
+      </label>
+      <button type="submit" class="btn-primary">Submit score</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>window.QUIZ_QUESTIONS_PER_ATTEMPT = {{ questions_per_attempt }};</script>
+<script src="{% static 'recs/js/quiz.js' %}?v={% now 'U' %}"></script>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "recs/base.html" %}
+{% load static %}
+{% block title %}Quiz Review | NPC Lobby{% endblock %}
+
+{% block content %}
+<nav class="topnav">
+  <a href="{% url 'recs:index' %}" class="brand pixel">
+    <img src="{% static 'recs/img/npc-logo-icon.png' %}" alt="" class="brand-icon">
+    NPC Lobby
+  </a>
+  <div class="nav-actions">
+    <a href="{% url 'recs:quiz' %}" class="btn-pill">Go to live quiz</a>
+  </div>
+</nav>
+
+<div class="list-page">
+  <div class="list-header">
+    <h1 class="pixel">QUIZ REVIEW</h1>
+    <p class="tagline">every seeded question, correct answer marked in green. staff-only page, not linked anywhere public</p>
+  </div>
+
+  {% regroup questions by movie_title as movie_groups %}
+  {% for group in movie_groups %}
+  <div class="quiz-review-group">
+    <h3 class="quiz-review-movie">{{ group.grouper }}</h3>
+    {% for q in group.list %}
+    <div class="quiz-review-question{% if not q.active %} quiz-review-inactive{% endif %}">
+      <div class="quiz-review-meta">
+        <span class="rec-type-badge">{{ q.get_style_display }}</span>
+        {% if not q.active %}<span class="rec-type-badge">inactive</span>{% endif %}
+        {% if q.review_note %}<span class="quiz-review-flag">&#9888; {{ q.review_note }}</span>{% endif %}
+      </div>
+      <p class="quiz-review-prompt">{{ q.prompt|linebreaksbr }}</p>
+      <ul class="quiz-review-options">
+        <li{% if q.correct_option == "a" %} class="quiz-review-correct"{% endif %}>A. {{ q.option_a }}</li>
+        <li{% if q.correct_option == "b" %} class="quiz-review-correct"{% endif %}>B. {{ q.option_b }}</li>
+        <li{% if q.correct_option == "c" %} class="quiz-review-correct"{% endif %}>C. {{ q.option_c }}</li>
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+  {% empty %}
+  <p class="empty-state">No questions seeded yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

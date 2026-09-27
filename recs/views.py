@@ -2,6 +2,7 @@ import json
 import random
 
 from django.conf import settings
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.validators import validate_email
 from django.db.models import Count
 from django.core.exceptions import ValidationError
@@ -18,7 +19,14 @@ from .emails import (
     send_welcome_email,
     send_your_list_email,
 )
-from .models import Invite, Karma, KarmaTier, Recommendation, ThankYou
+from .models import Invite, Karma, KarmaTier, QuizQuestion, Recommendation, ThankYou
+from .quiz import (
+    QUESTIONS_PER_ATTEMPT,
+    leaderboard_rows,
+    pick_quiz_questions,
+    record_attempt,
+    serialize_question,
+)
 from .tier_progress import send_weekly_tier_progress_emails
 
 DAILY_THANK_YOU_LIMIT = 2
@@ -322,3 +330,73 @@ def cron_weekly_tier_progress(request):
 
     sent = send_weekly_tier_progress_emails()
     return JsonResponse({"status": "ok", "sent": sent})
+
+
+@require_GET
+def quiz_view(request):
+    return render(
+        request,
+        "recs/quiz.html",
+        {
+            "questions_per_attempt": QUESTIONS_PER_ATTEMPT,
+            "leaderboard": leaderboard_rows(),
+        },
+    )
+
+
+@require_GET
+def quiz_questions_api(request):
+    questions = pick_quiz_questions(QUESTIONS_PER_ATTEMPT)
+    return JsonResponse({"questions": [serialize_question(q) for q in questions]})
+
+
+@require_POST
+def quiz_submit(request):
+    try:
+        data = json.loads(request.body or "{}")
+    except json.JSONDecodeError:
+        return _bad_request("Malformed request.")
+
+    name = (data.get("name") or "").strip()
+    email = (data.get("email") or "").strip()
+    score = data.get("score")
+    total = data.get("total")
+
+    if not name or not email:
+        return _bad_request("We need your name and email to save your score.")
+
+    try:
+        validate_email(email)
+    except ValidationError:
+        return _bad_request("That email doesn't look right.")
+
+    try:
+        score = int(score)
+        total = int(total)
+    except (TypeError, ValueError):
+        return _bad_request("That score doesn't look right.")
+
+    if score < 0 or total <= 0 or score > total:
+        return _bad_request("That score doesn't look right.")
+
+    attempt, created = record_attempt(name, email, score, total)
+
+    return JsonResponse(
+        {
+            "status": "ok",
+            "first_time": created,
+            "score": attempt.score,
+            "total_questions": attempt.total_questions,
+            "leaderboard": [
+                {"name": row.name, "score": row.score, "total_questions": row.total_questions}
+                for row in leaderboard_rows()
+            ],
+        }
+    )
+
+
+@staff_member_required
+@require_GET
+def quiz_test_view(request):
+    questions = QuizQuestion.objects.all().order_by("movie_title", "id")
+    return render(request, "recs/quiz_test.html", {"questions": questions})
