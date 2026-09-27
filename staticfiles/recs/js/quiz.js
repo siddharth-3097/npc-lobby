@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.getElementById("start-quiz-btn");
   if (!startBtn) return; // not on the quiz page
 
+  const shareBtn = document.getElementById("share-quiz-btn");
   const landing = document.getElementById("quiz-landing");
   const questionPanel = document.getElementById("quiz-question-panel");
   const progressEl = document.getElementById("quiz-progress");
@@ -42,6 +43,30 @@ document.addEventListener("DOMContentLoaded", () => {
     questionPanel.classList.remove("hidden");
     renderQuestion();
   });
+
+  if (shareBtn) {
+    shareBtn.addEventListener("click", async () => {
+      const url = "https://www.npclobby.space/quiz";
+      try {
+        await navigator.clipboard.writeText(url);
+        showToast("Quiz link copied!");
+      } catch (err) {
+        const textarea = document.createElement("textarea");
+        textarea.value = url;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand("copy");
+          showToast("Quiz link copied!");
+        } catch (fallbackErr) {
+          showToast(`Couldn't copy automatically. Here's the link: ${url}`, true);
+        }
+        document.body.removeChild(textarea);
+      }
+    });
+  }
 
   function renderQuestion() {
     answered = false;

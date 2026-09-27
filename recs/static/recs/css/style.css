@@ -971,9 +971,25 @@ main {
   max-width: 260px;
 }
 
+.quiz-share-btn {
+  margin-top: 14px;
+}
+
 .quiz-leaderboard-section {
   width: 100%;
   margin-top: 56px;
+}
+
+.quiz-incentive {
+  display: inline-block;
+  margin: 16px 0 0;
+  padding: 10px 18px;
+  background: #ffffff;
+  border: 2px solid;
+  border-image: var(--neon) 1;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.85rem;
 }
 
 .quiz-leaderboard {
@@ -1275,6 +1291,7 @@ main {
   .quiz-leaderboard-section { margin-top: 40px; }
   .quiz-leaderboard-row { padding: 11px 14px; gap: 10px; }
   .quiz-review-question { padding: 12px 14px; }
+  .quiz-incentive { font-size: 0.78rem; padding: 9px 14px; }
 }
 
 @media (max-width: 360px) {
